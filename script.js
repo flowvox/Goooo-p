@@ -11,6 +11,9 @@ window.addEventListener("scroll" ,()=>{
     moon.style.top = value * 1.2 + "px";
     text.style.top = 80 + value * -0.2 +"%"
     train.style.left = value *3 +"px"
+    d_moon.style.top=80+value*.1 +"px"
+    man.style.left=value*0.1+"px"
 
 }
-)
+);
+
