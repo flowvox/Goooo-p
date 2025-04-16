@@ -58,10 +58,6 @@ ul.navlist {
     color: #1d002c;
 }
 
-section {
-    min-height: 100vh;
-    min-width: 100vw;
-}
 .logo{
     font-size: 2rem;
     font-weight: 500;
@@ -87,10 +83,6 @@ section {
     color: #12f712;
     border: 1px solid #12f712;
     box-shadow: 0 0 1rem #12f712;
-}
-.products {
-    background-color: #121137;
-    padding: 10rem 10%;
 }
 .products h2{
     font-size: 2rem;
