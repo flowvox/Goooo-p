@@ -240,41 +240,4 @@ section {
     margin-top: -7rem;
     filter: drop-shadow(0 0 0.5rem #12f7ff);
 }
-.reccomendation_system{
-    margin-top: 100px;
-    margin-bottom: 100px;
-    padding: 3rem;
-    border:2px solid #12f7ff;
-    text-align: center;
-    border-radius: 25px;
-    display: block;
-    z-index: 1000;
-    transition: all ease 0.7s;
-    width: 90%;
-}
-.reccomendation{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
-.options{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5rem;
-}
-.op_card{
-    margin-top: 100px;
-    margin-bottom: 100px;
-    padding: 3rem;
-    border:2px solid #12f7ff;
-    text-align: center;
-    border-radius: 25px;
-    display: block;
-    z-index: 1000;
-    transition: all ease 0.7s;
-    width: 20%;
-
-}
 

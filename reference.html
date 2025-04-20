@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerala Travel Recommendations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #06735a;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .question-container {
+            position: relative;
+            min-height: 500px;
+        }
+
+        .question {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+
+        .question.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .question h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #06735a;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .option-card {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 300px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .option-card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #06735a;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .select-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #06735a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .select-btn:hover {
+            background-color: #045042;
+        }
+
+        .recommendations {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+
+        .recommendations h2 {
+            color: #06735a;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .recommendation-item {
+            display: flex;
+            margin-bottom: 30px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .recommendation-image {
+            width: 300px;
+            height: 200px;
+        }
+
+        .recommendation-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .recommendation-content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .recommendation-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #06735a;
+        }
+
+        .recommendation-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .recommendation-features {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feature {
+            background-color: #e6f7f2;
+            color: #06735a;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .restart-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 12px;
+            background-color: #06735a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            background-color: #045042;
+        }
+
+        .progress-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 40px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #06735a;
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .recommendation-item {
+                flex-direction: column;
+            }
+            
+            .recommendation-image {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Discover Kerala</h1>
+            <p class="subtitle">Find your perfect Kerala experience</p>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="question-container" id="questionContainer">
+            <!-- Question 1: Travel Companions -->
+            <div class="question active" id="question1">
+                <h2>Who will you be traveling with?</h2>
+                <div class="options">
+                    <div class="option-card">
+                        <div class="card-image">
+                            <img src="/placeholder.svg?height=180&width=300&text=Solo+Traveler" alt="Solo Traveler">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Solo</h3>
+                            <p class="card-description">Perfect for self-discovery and flexibility in your journey.</p>
+                            <button class="select-btn" data-value="solo">Select</button>
+                        </div>
+                    </div>
+
+                    <div class="option-card">
+                        <div class="card-image">
+                            <img src="/placeholder.svg?height=180&width=300&text=Group+Travel" alt="Group Travel">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Group</h3>
+                            <p class="card-description">Share amazing experiences with friends or like-minded travelers.</p>
+                            <button class="select-btn" data-value="group">Select</button>
+                        </div>
+                    </div>
+
+                    <div class="option-card">
+                        <div class="card-image">
+                            <img src="/placeholder.svg?height=180&width=300&text=Family+Vacation" alt="Family Vacation">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Family</h3>
+                            <p class="card-description">Create lasting memories with activities for all ages.</p>
+                            <button class="select-btn" data-value="family">Select</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2: Budget -->
+            <div class="question" id="question2">
+                <h2>What's your budget range?</h2>
+                <div class="options">
+                    <div class="option-card">
+                        <div class="card-image">
+                            <img src="/placeholder.svg?height=180&width=300&text=Budget+Travel" alt="Budget Travel">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Budget</h3>
+                            <p class="card-description">Great experiences without breaking the bank.</p>
+                            <button class="select-btn" data-value="budget">Select</button>
+                        </div>
+                    </div>
+
+                    <div class="option-card">
+                        <div class="card-image">
+                            <img src="/placeholder.svg?height=180&width=300&text=Mid-range" alt="Mid-range">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Mid-range</h3>
+                            <p class="card-description">Balance of comfort and value for your journey.</p>
+                            <button class="select-btn" data-value="mid-range">Select</button>
+                        </div>
+                    </div>
+
+                    <div class="option-card">
+                        <div class="card-image">
+                            <img src="/placeholder.svg?height=180&width=300&text=Luxury+Travel" alt="Luxury Travel">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Luxury</h3>
+                            <p class="card-description">Premium experiences with the finest accommodations and services.</p>
+                            <button class="select-btn" data-value="luxury">Select</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3: Region -->
+            <div class="question" id="question3">
+                <h2>Which region of Kerala interests you most?</h2>
+                <div class="options">
+                    <div class="option-card">
+                        <div class="card-image">
+                            <img src="/placeholder.svg?height=180&width=300&text=Coastal+Kerala" alt="Coastal Kerala">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Coastal</h3>
+                            <p class="card-description">Experience the vibrant coastal life and culture of Kerala.</p>
+                            <button class="select-btn" data-value="coastal">Select</button>
+                        </div>
+                    </div>
+
+                    <div class="option-card">
+                        <div class="card-image">
+                            <img src="/placeholder.svg?height=180&width=300&text=Beaches" alt="Beaches">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Beaches</h3>
+                            <p class="card-description">Relax on pristine beaches with golden sands and blue waters.</p>
+                            <button class="select-btn" data-value="beaches">Select</button>
+                        </div>
+                    </div>
+
+                    <div class="option-card">
+                        <div class="card-image">
+                            <img src="/placeholder.svg?height=180&width=300&text=Hill+Stations" alt="Hill Stations">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Hills</h3>
+                            <p class="card-description">Discover the misty mountains and lush tea plantations.</p>
+                            <button class="select-btn" data-value="hills">Select</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations Section (Initially Hidden) -->
+        <div class="recommendations" id="recommendationsSection" style="display: none;">
+            <h2>Your Personalized Kerala Recommendations</h2>
+            <div id="recommendationsList">
+                <!-- Recommendations will be inserted here by JavaScript -->
+            </div>
+            <button class="restart-btn" id="restartBtn">Start Over</button>
+        </div>
+    </div>
+
+    <script>
+        // Store user selections
+        const userSelections = {
+            companion: '',
+            budget: '',
+            region: ''
+        };
+
+        // Current question index
+        let currentQuestionIndex = 1;
+        const totalQuestions = 3;
+
+        // DOM elements
+        const questionContainer = document.getElementById('questionContainer');
+        const progressBar = document.getElementById('progressBar');
+        const recommendationsSection = document.getElementById('recommendationsSection');
+        const recommendationsList = document.getElementById('recommendationsList');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex - 1) / totalQuestions) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Handle option selection
+        function handleSelection(event) {
+            if (event.target.classList.contains('select-btn')) {
+                const value = event.target.getAttribute('data-value');
+                
+                // Store the selection based on current question
+                if (currentQuestionIndex === 1) {
+                    userSelections.companion = value;
+                } else if (currentQuestionIndex === 2) {
+                    userSelections.budget = value;
+                } else if (currentQuestionIndex === 3) {
+                    userSelections.region = value;
+                }
+                
+                // Move to next question or show recommendations
+                if (currentQuestionIndex < totalQuestions) {
+                    moveToNextQuestion();
+                } else {
+                    showRecommendations();
+                }
+            }
+        }
+
+        // Move to the next question with animation
+        function moveToNextQuestion() {
+            // Hide current question
+            const currentQuestion = document.getElementById(`question${currentQuestionIndex}`);
+            currentQuestion.classList.remove('active');
+            
+            // Move to next question
+            currentQuestionIndex++;
+            
+            // Show next question
+            const nextQuestion = document.getElementById(`question${currentQuestionIndex}`);
+            setTimeout(() => {
+                nextQuestion.classList.add('active');
+                updateProgressBar();
+            }, 500);
+        }
+
+        // Show recommendations based on user selections
+        function showRecommendations() {
+            // Update progress bar to 100%
+            progressBar.style.width = '100%';
+            
+            // Hide questions
+            questionContainer.style.display = 'none';
+            
+            // Generate recommendations based on user selections
+            const recommendations = generateRecommendations();
+            
+            // Clear previous recommendations
+            recommendationsList.innerHTML = '';
+            
+            // Add recommendations to the DOM
+            recommendations.forEach(rec => {
+                const recHTML = `
+                    <div class="recommendation-item">
+                        <div class="recommendation-image">
+                            <img src="${rec.image}" alt="${rec.title}">
+                        </div>
+                        <div class="recommendation-content">
+                            <h3 class="recommendation-title">${rec.title}</h3>
+                            <p class="recommendation-description">${rec.description}</p>
+                            <div class="recommendation-features">
+                                ${rec.features.map(feature => `<span class="feature">${feature}</span>`).join('')}
+                            </div>
+                            <p>Perfect for: ${rec.perfectFor}</p>
+                        </div>
+                    </div>
+                `;
+                recommendationsList.innerHTML += recHTML;
+            });
+            
+            // Show recommendations section
+            recommendationsSection.style.display = 'block';
+        }
+
+        // Generate recommendations based on user selections
+        function generateRecommendations() {
+            const { companion, budget, region } = userSelections;
+            const recommendations = [];
+            
+            // Logic for recommendations based on selections
+            if (region === 'coastal') {
+                if (companion === 'solo') {
+                    recommendations.push({
+                        title: 'Fort Kochi Cultural Experience',
+                        description: 'Explore the historic streets of Fort Kochi with its colonial architecture, Chinese fishing nets, and vibrant art scene.',
+                        image: '/placeholder.svg?height=200&width=300&text=Fort+Kochi',
+                        features: ['Cultural', 'Historic', 'Art'],
+                        perfectFor: 'Solo travelers looking for cultural immersion'
+                    });
+                    
+                    if (budget === 'budget' || budget === 'mid-range') {
+                        recommendations.push({
+                            title: 'Alleppey Backwater Homestay',
+                            description: 'Stay with local families in Alleppey and experience authentic Kerala lifestyle along the backwaters.',
+                            image: '/placeholder.svg?height=200&width=300&text=Alleppey+Homestay',
+                            features: ['Local Experience', 'Backwaters', 'Authentic'],
+                            perfectFor: 'Solo travelers on a budget seeking authentic experiences'
+                        });
+                    }
+                } else if (companion === 'group') {
+                    recommendations.push({
+                        title: 'Houseboat Adventure in Alleppey',
+                        description: 'Cruise through the serene backwaters of Alleppey on a traditional Kerala houseboat with your group.',
+                        image: '/placeholder.svg?height=200&width=300&text=Houseboat',
+                        features: ['Backwaters', 'Group Activity', 'Scenic'],
+                        perfectFor: 'Groups looking for a unique shared experience'
+                    });
+                } else if (companion === 'family') {
+                    recommendations.push({
+                        title: 'Kumarakom Bird Sanctuary',
+                        description: 'Visit this bird sanctuary located on the banks of Vembanad Lake, perfect for nature-loving families.',
+                        image: '/placeholder.svg?height=200&width=300&text=Kumarakom',
+                        features: ['Wildlife', 'Nature', 'Family-friendly'],
+                        perfectFor: 'Families with children interested in nature'
+                    });
+                }
+            } else if (region === 'beaches') {
+                if (budget === 'luxury') {
+                    recommendations.push({
+                        title: 'Kovalam Luxury Beach Resort',
+                        description: 'Indulge in premium beachfront accommodations with world-class amenities and services.',
+                        image: '/placeholder.svg?height=200&width=300&text=Kovalam+Resort',
+                        features: ['Luxury', 'Beachfront', 'Spa'],
+                        perfectFor: `${companion === 'family' ? 'Families' : companion === 'group' ? 'Groups' : 'Solo travelers'} seeking luxury beach experiences`
+                    });
+                } else {
+                    recommendations.push({
+                        title: 'Varkala Cliff Beach Retreat',
+                        description: 'Experience the unique cliff-side beach of Varkala with stunning views of the Arabian Sea.',
+                        image: '/placeholder.svg?height=200&width=300&text=Varkala+Beach',
+                        features: ['Scenic', 'Beach', 'Yoga'],
+                        perfectFor: `${companion === 'family' ? 'Families' : companion === 'group' ? 'Groups' : 'Solo travelers'} looking for a unique beach experience`
+                    });
+                }
+                
+                if (companion === 'family') {
+                    recommendations.push({
+                        title: 'Marari Beach Family Adventure',
+                        description: 'Enjoy the quiet, clean shores of Marari Beach with plenty of family-friendly activities.',
+                        image: '/placeholder.svg?height=200&width=300&text=Marari+Beach',
+                        features: ['Family-friendly', 'Quiet', 'Activities'],
+                        perfectFor: 'Families seeking a peaceful beach getaway'
+                    });
+                }
+            } else if (region === 'hills') {
+                if (companion === 'solo' || companion === 'group') {
+                    recommendations.push({
+                        title: 'Munnar Tea Plantation Trek',
+                        description: 'Hike through the lush tea plantations of Munnar and enjoy breathtaking mountain views.',
+                        image: '/placeholder.svg?height=200&width=300&text=Munnar+Tea+Plantations',
+                        features: ['Trekking', 'Scenic', 'Tea Plantations'],
+                        perfectFor: `${companion === 'group' ? 'Groups' : 'Solo travelers'} who enjoy hiking and nature`
+                    });
+                }
+                
+                if (companion === 'family') {
+                    recommendations.push({
+                        title: 'Thekkady Wildlife Experience',
+                        description: 'Visit Periyar Wildlife Sanctuary in Thekkady for elephant safaris and boat rides on the lake.',
+                        image: '/placeholder.svg?height=200&width=300&text=Thekkady+Wildlife',
+                        features: ['Wildlife', 'Safari', 'Family-friendly'],
+                        perfectFor: 'Families interested in wildlife and nature'
+                    });
+                }
+                
+                if (budget === 'luxury' || budget === 'mid-range') {
+                    recommendations.push({
+                        title: 'Wayanad Luxury Treehouse Stay',
+                        description: 'Stay in a luxurious treehouse in the misty mountains of Wayanad for a unique experience.',
+                        image: '/placeholder.svg?height=200&width=300&text=Wayanad+Treehouse',
+                        features: ['Unique Stay', 'Nature', 'Luxury'],
+                        perfectFor: `${companion === 'family' ? 'Families' : companion === 'group' ? 'Groups' : 'Solo travelers'} looking for a unique mountain experience`
+                    });
+                }
+            }
+            
+            // Add a general recommendation based on budget if we don't have enough specific ones
+            if (recommendations.length < 2) {
+                if (budget === 'budget') {
+                    recommendations.push({
+                        title: 'Kerala Homestay Network',
+                        description: 'Experience authentic Kerala hospitality by staying with local families across the state.',
+                        image: '/placeholder.svg?height=200&width=300&text=Kerala+Homestay',
+                        features: ['Budget-friendly', 'Authentic', 'Local Experience'],
+                        perfectFor: `${companion === 'family' ? 'Families' : companion === 'group' ? 'Groups' : 'Solo travelers'} on a budget`
+                    });
+                } else if (budget === 'luxury') {
+                    recommendations.push({
+                        title: 'Kerala Ayurveda Wellness Retreat',
+                        description: 'Indulge in traditional Ayurvedic treatments and wellness programs at a luxury resort.',
+                        image: '/placeholder.svg?height=200&width=300&text=Ayurveda+Retreat',
+                        features: ['Wellness', 'Luxury', 'Ayurveda'],
+                        perfectFor: `${companion === 'family' ? 'Families' : companion === 'group' ? 'Groups' : 'Solo travelers'} seeking relaxation and rejuvenation`
+                    });
+                }
+            }
+            
+            return recommendations;
+        }
+
+        // Restart the quiz
+        function restartQuiz() {
+            // Reset user selections
+            userSelections.companion = '';
+            userSelections.budget = '';
+            userSelections.region = '';
+            
+            // Reset current question index
+            currentQuestionIndex = 1;
+            
+            // Hide recommendations section
+            recommendationsSection.style.display = 'none';
+            
+            // Show question container
+            questionContainer.style.display = 'block';
+            
+            // Reset active question
+            document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+            document.getElementById('question1').classList.add('active');
+            
+            // Reset progress bar
+            updateProgressBar();
+        }
+
+        // Event listeners
+        questionContainer.addEventListener('click', handleSelection);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Initialize progress bar
+        updateProgressBar();
+    </script>
+</body>
+</html>
