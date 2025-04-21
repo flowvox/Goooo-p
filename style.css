@@ -242,16 +242,20 @@ section {
 }
 
 /* Reccomendation system css */
-.app{
-    font-family: "Poppins", sans-serif;
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 1200px;
+    margin: 100px auto 0;
+    padding: 2rem 1rem;
     background-color: #1c1a4f;
     color: white;
-    width: 90%;
-    max-width: 600px;
-    margin: 100px auto 0;
     border-radius: 10px;
-    padding: 30px;
-}
+  }
+  
 
 .app h1{
     font-size: 25px;
@@ -280,9 +284,15 @@ section {
     cursor: pointer;
     transition: all 0.3s;
 }
-.a-btn:hover{
+.a-btn:hover:not([disabled]){
     background: #097e82;
     color: white;
+}
+.a-btn:disabled{
+    background: #ccc;
+    color: #666;
+    cursor:no-drop;
+    transition: all 0.3s;
 }
 #next-btn{
     background:#1d5dc3;
@@ -296,3 +306,86 @@ section {
     cursor: pointer;
     display: block;
 }
+
+.white-color    {
+    background-color: white;
+}
+
+.selected{
+    background-color: #097e82;
+    color: white;
+}
+
+/* cards */
+/* ========== CARD CONTAINER ========== */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+    padding: 2rem 1rem;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  
+  /* ============ CARD STYLING ============ */
+  .card {
+    background: linear-gradient(135deg, #1c1a4f 0%, #121137 100%);
+    border: 1px solid rgba(18, 247, 255, 0.5);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 300px;
+    padding: 1.5rem;
+    color: #f1f1f1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(18, 247, 255, 0.4);
+  }
+  
+
+
+
+  /*CARD CONTENT*/
+  #results {
+    width: 100%;                       
+    max-width: 1200px;                 
+    margin-top: 2rem;                  
+    display: grid;                     
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  .card h3 {
+    margin: 0 0 0.75rem;
+    color: #12f7ff;
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+  
+  .card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  
+  /* Optional: If you include images in cards */
+  .card img {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* ===== RESPONSIVE TWEAK ===== */
+  @media (max-width: 600px) {
+    .card-container {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+  }
+  

@@ -4,6 +4,7 @@ let train = document.getElementById("train")
 let d_moon = document.getElementById("d-moon")
 let man = document.getElementById("man")
 
+let answers = [];    // will hold user answers
 
 
 window.addEventListener("scroll" ,()=>{
@@ -59,3 +60,97 @@ const questions = [
 const questionContainer = document.getElementById("question")
 const answerButtons = document.getElementById("answer-buttons")
 const nextButton = document.getElementById("next-btn")
+
+
+let currentQuestionIndex = 0;
+
+
+function startSystem(){
+    currentQuestionIndex = 0;
+    
+
+    nextButton.innerHTML = "Next";
+    showQuestion();
+}
+function showQuestion(){
+    resetState();
+    let curerntQuestion = questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionContainer.innerHTML = questionNo + ". " + curerntQuestion.question;
+
+    curerntQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerText = answer.text;
+        button.classList.add("a-btn");
+        button.addEventListener("click", () => selectAnswer(answer));
+        answerButtons.appendChild(button);
+        if(answer.value){
+            button.dataset.value = answer.value;
+        }
+        
+    })
+}
+nextButton.addEventListener("click", () => {
+    // move to next or finish
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+      showQuestion();
+    } else {
+      // all done → run recommendation
+      runRecommendation();
+    }
+  });
+  
+
+function resetState(){
+    nextButton.style.display = "none";
+    while(answerButtons.firstChild){
+        answerButtons.removeChild(answerButtons.firstChild);
+    }
+}
+
+function selectAnswer(answer){
+    answers[currentQuestionIndex] = answer.value;
+    const selectedButton = document.querySelector(`button[data-value="${answer.value}"]`);
+    selectedButton.classList.add("selected");
+    const selectedValue = selectedButton.dataset.value;
+    Array.from(answerButtons.children).forEach(button => {
+        if(button !== selectedButton){
+            button.disabled=true;
+        }
+    });
+    nextButton.style.display = "block";
+   
+}
+function runRecommendation() {
+    const [tripType, region, budget, duration] = answers;
+  
+    const output = recommendWasm(region, budget, duration, tripType);
+    const lines = output.trim().split('\n');
+  
+    document.getElementById("quiz-container").style.display = "none";
+    renderCards(lines);
+    document.getElementById("results").style.display = "flex";
+
+  }
+
+// render cards in the results div
+  function renderCards(lines) {
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";       // clear old
+  
+    lines.forEach(line => {
+      const [title, desc] = line.split('|');
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <h3>${title}</h3>
+        <p>${desc}</p>
+      `;
+      resultsDiv.appendChild(card);
+    });
+  }
+    
+
+
+startSystem();

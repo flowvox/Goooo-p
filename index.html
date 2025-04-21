@@ -66,16 +66,18 @@
         <div class="products">
             <div class="app">
                 <h1>Reccomendation System</h1>
-                <div class="quiz">
+                <div class="quiz" id="quiz-container">
                     <h2 id="question">Qn Here</h2>
                     <div id="answer-buttons">
                         <button class="a-btn">ans 1</button>
                         <button class="a-btn">ans 2</button>
-                        <button class="a-btn">ans 3</button>
-                        <button class="a-btn">ans 3</button>
+                        
                     </div>
                     <button class="next-btn" id="next-btn">Next</button>
                 </div>
+                <div id="results" class="card-container" style="display:none;"></div>
+                <div id="loading" class="loading" style="display:none;">
+                    <img src="Images\About-Images\loading.gif" alt="">
             </div>
         </div>
     </section>
@@ -83,6 +85,19 @@
 
 
     <script src="script.js"></script>
+    <script src="recommend.js"></script>
+    <!-- somewhere after <script src="recommend.js"> -->
+<script>
+    // cwrap only after Module is ready:
+    Module.onRuntimeInitialized = () => {
+      window.recommendWasm = Module.cwrap(
+        'recommend',    // C fn name
+        'string',       // return type
+        ['string','string','string','string']  // arg types
+      );
+    };
+  </script>
+  
 </body>
 
 </html>
