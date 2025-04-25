@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            list-style: none;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: #1d002c;
+            color: white;
+        }
+
+        header {
+            padding: 25px 10%;
+            position: absolute;  
+            left: 0;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        ul.navlist {
+            display: flex;
+            align-items: center;
+        }
+
+        .navlist li {
+            margin-left: 1rem;
+        }
+
+        .navlist li a {
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 2px solid #12f7ff;
+            padding: 5px 12px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .navlist li a:hover, 
+        .navlist li a.active {
+            background-color: #12f7ff;
+            color: #1d002c;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 500;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Contact Section Styles */
+        .contact-container {
+            padding-top: 120px;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #1d002c;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .contact-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-header p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #e0e0e0;
+        }
+
+        .contact-content {
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-form {
+            flex: 1;
+            background-color: #121137;
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid #12f7ff;
+        }
+
+        .contact-info {
+            flex: 0.5;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #12f7ff;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background-color: #1d002c;
+            border: 1px solid #12f7ff;
+            border-radius: 8px;
+            color: white;
+            font-family: "Poppins", sans-serif;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: #12f7ff;
+            color: #1d002c;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .info-card {
+            background-color: #121137;
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid #12f7ff;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-card h3 {
+            color: #12f7ff;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .info-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .info-item i {
+            color: #12f7ff;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #1d002c;
+            border-radius: 50%;
+            color: #12f7ff;
+            text-decoration: none;
+            border: 1px solid #12f7ff;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #12f7ff;
+            margin-top: 1rem;
+        }
+    </style>
+    <!-- FontAwesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">Gooo</a>
+        <ul class="navlist">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+    </header>
+
+    <main class="contact-container">
+        <div class="contact-header">
+            <h1>Get In Touch</h1>
+            <p>We'd love to hear from you! Fill out the form below and we'll get back to you as soon as possible.</p>
+        </div>
+
+        <div class="contact-content">
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+
+            <div class="contact-info">
+                <div class="info-card">
+                    <h3>Contact Information</h3>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <p>Ernakulam</p>
+                            <p>Kerala</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <p>+91 565545454</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <p>contact@goooo.com</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <p>Monday - Friday: 9am - 5pm</p>
+                            <p>Saturday - Sunday: Closed</p>
+                        </div>
+                    </div>
+
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            
+            alert('Thank you for your message! We will get back to you soon.');
+        });
+    </script>
+</body>
+</html>
