@@ -27,7 +27,7 @@ const questions = [
     question:"Who are you going with?",
     answers:[
         {text: "Solo", value: "solo"},
-        {text: "Family", value: "family"},
+        {text: "Family", value: "couple"},
         {text: "Group", value: "group"},
     ]
 },
