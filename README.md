@@ -4,7 +4,7 @@
 
 An interactive travel recommendation web app built using HTML, CSS, JavaScript, and WebAssembly (compiled from C). Users answer a few simple questions, and the site suggests 3 personalized travel packages based on their preferences.
 
-Live Demo: [[https://goooo-trip-advisor-git-main-czx-neos-projects.vercel.app/]]
+Live Demo: [https://goooo-trip-advisor-git-main-czx-neos-projects.vercel.app/]
 
 ## Features
 - Dynamic multi-step quiz interface
